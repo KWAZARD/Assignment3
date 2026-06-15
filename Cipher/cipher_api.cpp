@@ -30,7 +30,7 @@ extern "C" {
 		Cipher* obj = (Cipher*)cipher;
 		std::string result = obj->decrypt(text);
 		char* decryptedResult = new char[result.length() + 1];
-		
+		memcpy(decryptedResult, result.c_str(), result.length() + 1);
 		return decryptedResult;
 	}
 	/* Cleanup */
@@ -40,6 +40,8 @@ extern "C" {
 	}
 	void cipher_free(char* str)
 	{
-		delete[] str;
+		if (str != nullptr) {
+			delete[] str;
+		}
 	}
 }

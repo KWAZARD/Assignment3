@@ -37,21 +37,22 @@ int main()
         int choise;
         printf("Enter cipher:\n"
             "1- Caesar\n"
-            "2- Vigenere\n");
-        scanf_s("%d", choise);
+            "2- Vigenere\n"
+            "3- Exit\n");
+        scanf_s("%d", &choise);
         switch (choise)
         {
         case 1:
         {
             int input_key;
             printf("Enter key in number:\n");
-            scanf_s("%d", input_key);
+            scanf_s("%d", &input_key);
             cipher_t* newCaesar = cipher_create_caesar(input_key);
             printf("Enter:\n"
                 "1-Encrypt:\n"
-                "2-Decrypt:\n"
-                "3-Exit\n");
+                "2-Decrypt:\n");
             int a;
+            scanf_s("%d", &a);
             switch (a)
             {
                 case 1:
@@ -59,9 +60,11 @@ int main()
                     std::string text;
                     printf("Enter text:\n");
                     std::cin >> text;
-                    char* out = new char[text.length() + 1];
-                    memcpy(out, text.c_str(), text.length() + 1);
-                    printf(cipher_encrypt(newCaesar, out));
+                    printf("Result: ");
+                    char* end = cipher_encrypt(newCaesar, text.c_str());
+                    printf(end);
+                    printf("\n");
+                    cipher_free(end);
                     cipher_destroy(newCaesar);
                     break;
                 }
@@ -70,9 +73,11 @@ int main()
                     std::string text;
                     printf("Enter text:\n");
                     std::cin >> text;
-                    char* out = new char[text.length() + 1];
-                    memcpy(out, text.c_str(), text.length() + 1);
-                    printf(cipher_decrypt(newCaesar, out));
+                    printf("Result: ");
+                    char* end = cipher_decrypt(newCaesar, text.c_str());
+                    printf(end);
+                    printf("\n");
+                    cipher_free(end);
                     cipher_destroy(newCaesar);
                     break;
                 }
@@ -89,14 +94,13 @@ int main()
             std::string input_key;
             printf("Enter key:\n");
             std::cin >> input_key;
-            char* key= new char[input_key.length() + 1];
-            memcpy(key, input_key.c_str(), input_key.length() + 1);
-            cipher_t* newVigenere = cipher_create_vigenere(key);
+            
+            cipher_t* newVigenere = cipher_create_vigenere(input_key.c_str());
             printf("Enter:\n"
                 "1-Encrypt:\n"
-                "2-Decrypt:\n"
-                "3-Exit\n");
+                "2-Decrypt:\n");
             int a;
+            scanf_s("%d", &a);
             switch (a)
             {
                 case 1:
@@ -104,9 +108,12 @@ int main()
                     std::string text;
                     printf("Enter text:\n");
                     std::cin >> text;
-                    char* out = new char[text.length() + 1];
-                    memcpy(out, text.c_str(), text.length() + 1);
-                    printf(cipher_encrypt(newVigenere, out));
+                    printf("Result: ");
+                    char* end = cipher_encrypt(newVigenere, text.c_str());
+                    printf(end);
+                    printf("\n");
+
+                    cipher_free(end);
                     cipher_destroy(newVigenere);
                     break;
                 }
@@ -115,10 +122,13 @@ int main()
                     std::string text;
                     printf("Enter text:\n");
                     std::cin >> text;
-                    char* out = new char[text.length() + 1];
-                    memcpy(out, text.c_str(), text.length() + 1);
-                    printf(cipher_decrypt(newCaesar, out));
-                    cipher_destroy(newCaesar);
+                    printf("Result: ");
+                    char* end = cipher_decrypt(newVigenere, text.c_str());
+                    printf(end);
+                    printf("\n");
+
+                    cipher_free(end);
+                    cipher_destroy(newVigenere);
                     break;
                 }
 
