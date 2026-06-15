@@ -139,6 +139,7 @@ int main()
             break;
         }
         case 3:
+            FreeLibrary(cipher);
             printf("Exit successful\n");
             break;
         default:
