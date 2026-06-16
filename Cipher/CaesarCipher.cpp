@@ -13,11 +13,11 @@ std::string CaesarCipher::encrypt(const std::string& text)
 			
 		if (newText[i] >= 'a' && newText[i] <= 'z')
 		{
-			newText[i] = (newText[i] - 'a' + keyValue) % 26 + 'a';
+			newText[i] = (newText[i] - 'a' + keyValue % 26 + 26) % 26 + 'a';
 		}
 		if (newText[i] >= 'A' && newText[i] <= 'Z')
 		{
-			newText[i] = (newText[i] - 'A' + keyValue) % 26 + 'A';
+			newText[i] = (newText[i] - 'A' + keyValue % 26 + 26) % 26 + 'A';
 		}
 	}
 	return newText;

@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include "cipher_api.h"
 #include <iostream>
+#include <string>
+
 
 
 typedef cipher_t* (*cipher_create_caesar_fn)(int key);
@@ -34,32 +36,40 @@ int main()
 
     while (1)
     {
-        int choise;
+        int choice;
         printf("Enter cipher:\n"
             "1- Caesar\n"
             "2- Vigenere\n"
             "3- Exit\n");
-        scanf_s("%d", &choise);
-        switch (choise)
+        std::cin >> choice;
+        switch (choice)
         {
         case 1:
         {
             int input_key;
             printf("Enter key in number:\n");
-            scanf_s("%d", &input_key);
+
+            std::cin >> input_key;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
+
             cipher_t* newCaesar = cipher_create_caesar(input_key);
             printf("Enter:\n"
                 "1-Encrypt:\n"
                 "2-Decrypt:\n");
             int a;
-            scanf_s("%d", &a);
+            std::cin >> a;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
             switch (a)
             {
                 case 1:
                 {
                     std::string text;
                     printf("Enter text:\n");
-                    std::cin >> text;
+                    std::getline(std::cin, text);
+
+
                     printf("Result: ");
                     char* end = cipher_encrypt(newCaesar, text.c_str());
                     printf(end);
@@ -72,7 +82,8 @@ int main()
                 {
                     std::string text;
                     printf("Enter text:\n");
-                    std::cin >> text;
+                    std::getline(std::cin, text);
+
                     printf("Result: ");
                     char* end = cipher_decrypt(newCaesar, text.c_str());
                     printf(end);
@@ -94,20 +105,25 @@ int main()
             std::string input_key;
             printf("Enter key:\n");
             std::cin >> input_key;
-            
+            std::cin.clear();
+            std::cin.ignore(INFINITY, '\n');
             cipher_t* newVigenere = cipher_create_vigenere(input_key.c_str());
             printf("Enter:\n"
                 "1-Encrypt:\n"
                 "2-Decrypt:\n");
             int a;
-            scanf_s("%d", &a);
+            std::cin >> a;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
             switch (a)
             {
                 case 1:
                 {
                     std::string text;
                     printf("Enter text:\n");
-                    std::cin >> text;
+                    std::getline(std::cin, text);
+
+
                     printf("Result: ");
                     char* end = cipher_encrypt(newVigenere, text.c_str());
                     printf(end);
@@ -121,7 +137,7 @@ int main()
                 {
                     std::string text;
                     printf("Enter text:\n");
-                    std::cin >> text;
+                    std::getline(std::cin, text);
                     printf("Result: ");
                     char* end = cipher_decrypt(newVigenere, text.c_str());
                     printf(end);
