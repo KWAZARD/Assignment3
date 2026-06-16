@@ -100,7 +100,7 @@ int main()
             break;
         }
         case 2:
-
+            
         {
             std::string input_key;
             printf("Enter key:\n");
