@@ -7,6 +7,9 @@
 #include <iostream>
 #include <string>
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 
 typedef cipher_t* (*cipher_create_caesar_fn)(int key);
@@ -15,9 +18,14 @@ typedef char* (*cipher_encrypt_fn)(cipher_t* cipher, const char* text);
 typedef char* (*cipher_decrypt_fn)(cipher_t* cipher, const char* text);
 typedef void (*cipher_destroy_fn)(cipher_t* cipher);
 typedef void (*cipher_free_fn)(char* str);
+
+
+
 int main()
 {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
+    
     HMODULE cipher = LoadLibrary(L"Cipher.dll");
     if (!cipher)
     {
@@ -36,6 +44,8 @@ int main()
 
     while (1)
     {
+       
+
         int choice;
         printf("Enter cipher:\n"
             "1- Caesar\n"
@@ -122,8 +132,7 @@ int main()
                     std::string text;
                     printf("Enter text:\n");
                     std::getline(std::cin, text);
-
-
+                    
                     printf("Result: ");
                     char* end = cipher_encrypt(newVigenere, text.c_str());
                     printf(end);
@@ -155,9 +164,13 @@ int main()
             break;
         }
         case 3:
+            _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+            _CrtDumpMemoryLeaks();
             FreeLibrary(cipher);
             printf("Exit successful\n");
-            break;
+
+            
+            return 0;
         default:
             printf("Choise does not exist\n");
             break;
